@@ -1,0 +1,20 @@
+version: '3.3'
+
+services:
+    ifmodifiedsincebundle_php:
+        image: dh.rinsvent.ru/php8dev
+        container_name: ifmodifiedsincebundle_php
+        volumes:
+            - ./:/app
+        environment:
+            USE_COMPOSER_SCRIPTS: 0
+        depends_on:
+            - ifmodifiedsincebundle_redis
+    ifmodifiedsincebundle_redis:
+        image: dh.rinsvent.ru/redis
+        container_name: ifmodifiedsincebundle_redis
+        command: redis-server --requirepass password123
+networks:
+    default:
+        external:
+            name: full-project

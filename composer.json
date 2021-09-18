@@ -1,0 +1,35 @@
+{
+    "name": "rinsvent/if-modified-since-bundle",
+    "description": "Check IfModifiedSince time",
+    "license": "MIT",
+    "require": {
+        "php": "^8.0",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "ext-json": "*",
+        "symfony/config": "^5.3",
+        "symfony/dependency-injection": "^5.3",
+        "rinsvent/exception": "^0.0",
+        "symfony/http-kernel": "^5.3",
+        "rinsvent/redis-manager-bundle": "^0.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "^4.1",
+        "codeception/module-phpbrowser": "^1.0",
+        "codeception/module-asserts": "^1.0",
+        "symfony/http-kernel": "^5.3",
+        "symfony/http-foundation": "^5.3",
+        "symfony/routing": "^5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "tests\\": "tests/",
+            "Rinsvent\\IfModifiedSinceBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rinsvent\\IfModifiedSinceBundle\\Tests\\": "tests/"
+        }
+    }
+}

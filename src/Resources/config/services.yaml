@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autoconfigure: true
+    public: false
+    autowire: true
+
+  Rinsvent\IfModifiedSinceBundle\Service\:
+    resource: ../../Service/
+
+  Rinsvent\IfModifiedSinceBundle\EventListener\IdempotencyListener:
+    bind:
+      ttl: 3600
+    tags:
+      - { name: kernel.event_listener, event: kernel.request }
