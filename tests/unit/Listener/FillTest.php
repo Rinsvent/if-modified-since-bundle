@@ -2,7 +2,7 @@
 
 namespace Rinsvent\IfModifiedSinceBundle\Tests\unit\Listener;
 
-use Rinsvent\IfModifiedSinceBundle\Exception\Idempotency\Key\Wrong;
+use Rinsvent\IfModifiedSinceBundle\Exception\IfModifiedSince\Key\Wrong;
 use Rinsvent\IfModifiedSinceBundle\Tests\UnitTester;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -29,7 +29,7 @@ class FillTest extends \Codeception\Test\Unit
         $request = Request::create('/hello/igor', 'GET', [
             'surname' => 'Surname'
         ]);
-        $request->headers->set('X-idempotency-Key', '1234');
+        $request->headers->set('If-Modified-Since', '1234');
         $response = $this->tester->send($request);
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
         $this->assertEquals('Hello igor', $response->getContent());
@@ -43,7 +43,7 @@ class FillTest extends \Codeception\Test\Unit
         $request = Request::create('/hello/igor', 'GET', [
             'surname' => 'Surname'
         ]);
-        $request->headers->set('X-idempotency-Key', '12341111111111111111111111111111111111111');
+        $request->headers->set('If-Modified-Since', '12341111111111111111111111111111111111111');
 
         $this->expectException(Wrong::class);
         $this->tester->send($request);

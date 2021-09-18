@@ -7,7 +7,7 @@ services:
   Rinsvent\IfModifiedSinceBundle\Service\:
     resource: ../../Service/
 
-  Rinsvent\IfModifiedSinceBundle\EventListener\IdempotencyListener:
+  Rinsvent\IfModifiedSinceBundle\EventListener\IfModifiedSinceListener:
     bind:
       ttl: 3600
     tags:

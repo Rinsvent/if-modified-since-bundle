@@ -5,7 +5,7 @@ namespace Rinsvent\IfModifiedSinceBundle\Tests\Helper;
 // all public methods declared in helper class will be available in $I
 
 use Predis\Client;
-use Rinsvent\IfModifiedSinceBundle\EventListener\IdempotencyListener;
+use Rinsvent\IfModifiedSinceBundle\EventListener\IfModifiedSinceListener;
 use Rinsvent\IfModifiedSinceBundle\Tests\unit\Listener\fixtures\Controller;
 use Rinsvent\RedisManagerBundle\Service\RedisHelperService;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -35,7 +35,7 @@ class Unit extends \Codeception\Module
         $matcher = new UrlMatcher($routes, new RequestContext());
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new RouterListener($matcher, new RequestStack()));
-        $listener = new IdempotencyListener($this->grabRedisHelperService(), 1);
+        $listener = new IfModifiedSinceListener($this->grabRedisHelperService(), 1);
         $dispatcher->addListener('kernel.request', [$listener, 'onKernelRequest']);
 
         $controllerResolver = new ControllerResolver();

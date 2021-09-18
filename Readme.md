@@ -1,4 +1,4 @@
-Idempotency bundle
+IfModifiedSince bundle
 ===
 
 Bundle добавляет обработку X-Idempotence-Key request`s header.
