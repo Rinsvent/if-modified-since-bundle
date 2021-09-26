@@ -24,7 +24,7 @@ class TimeStampManager
 
     public function invalidate(string $key): void
     {
-        $this->redisHelperService->set(self::PREFIX . $key, null);
+        $this->redisHelperService->set(self::PREFIX . $key, $this->getTimeStamp());
     }
 
     private function getTimeStamp()
