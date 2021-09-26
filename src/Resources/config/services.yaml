@@ -12,3 +12,17 @@ services:
       ttl: 3600
     tags:
       - { name: kernel.event_listener, event: kernel.request }
+
+  Rinsvent\IfModifiedSinceBundle\Service\Key\KeyServiceResolver:
+    bind:
+      $transformerLocator: !tagged_locator { tag: 'rinsvent.if_modifed_since.key.grabber', index_by: 'key', default_index_method: 'getLocatorKey' }
+
+  Rinsvent\IfModifiedSinceBundle\Service\TimeStamp\TimeStampServiceResolver:
+    bind:
+      $transformerLocator: !tagged_locator { tag: 'rinsvent.if_modifed_since.timestamp.grabber', index_by: 'key', default_index_method: 'getLocatorKey' }
+
+  _instanceof:
+    Rinsvent\IfModifiedSinceBundle\Service\Key\KeyAbstractGrabber:
+      tags: [ 'rinsvent.if_modifed_since.key.grabber' ]
+    Rinsvent\IfModifiedSinceBundle\Service\TimeStamp\TimeStampAbstractGrabber:
+      tags: [ 'rinsvent.if_modifed_since.timestamp.grabber' ]

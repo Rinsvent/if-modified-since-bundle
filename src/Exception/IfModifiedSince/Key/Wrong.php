@@ -1,6 +1,6 @@
 <?php
 
-namespace Rinsvent\IfModifiedSinceBundle\Exception\Idempotency\Key;
+namespace Rinsvent\IfModifiedSinceBundle\Exception\IfModifiedSince\Key;
 
 use Rinsvent\Exception\AbstractException;
 
