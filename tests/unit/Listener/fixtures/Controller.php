@@ -13,4 +13,20 @@ class Controller
             sprintf("Hello %s", $request->get('name'))
         );
     }
+
+    #[TimeStampMeta()]
+    public function hello2(Request $request)
+    {
+        return new Response(
+            sprintf("Hello %s", $request->get('name'))
+        );
+    }
+
+    #[KeyMeta()]
+    public function hello3(Request $request)
+    {
+        return new Response(
+            sprintf("Hello %s", $request->get('name'))
+        );
+    }
 }

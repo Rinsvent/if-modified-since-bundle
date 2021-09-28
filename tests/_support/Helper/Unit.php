@@ -6,8 +6,12 @@ namespace Rinsvent\IfModifiedSinceBundle\Tests\Helper;
 
 use Predis\Client;
 use Rinsvent\IfModifiedSinceBundle\EventListener\IfModifiedSinceListener;
+use Rinsvent\IfModifiedSinceBundle\Service\Key\KeyServiceResolver;
+use Rinsvent\IfModifiedSinceBundle\Service\TimeStamp\TimeStampServiceResolver;
+use Rinsvent\IfModifiedSinceBundle\Service\TimeStampManager;
 use Rinsvent\IfModifiedSinceBundle\Tests\unit\Listener\fixtures\Controller;
 use Rinsvent\RedisManagerBundle\Service\RedisHelperService;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -31,11 +35,19 @@ class Unit extends \Codeception\Module
                 '_controller' => [$controller, 'hello']
             ]
         ));
+        $routes->add('hello2', new Route('/hello2/{name}', [
+                '_controller' => [$controller, 'hello2']
+            ]
+        ));
+        $routes->add('hello3', new Route('/hello3/{name}', [
+                '_controller' => [$controller, 'hello3']
+            ]
+        ));
 
         $matcher = new UrlMatcher($routes, new RequestContext());
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new RouterListener($matcher, new RequestStack()));
-        $listener = new IfModifiedSinceListener($this->grabRedisHelperService(), 1);
+        $listener = new IfModifiedSinceListener($this->grabTimeStampManager(), $this->grabKeyServiceResolver(), $this->grabTimeStampServiceResolver());
         $dispatcher->addListener('kernel.request', [$listener, 'onKernelRequest']);
 
         $controllerResolver = new ControllerResolver();
@@ -54,5 +66,26 @@ class Unit extends \Codeception\Module
     public function grabRedisHelperService()
     {
         return new RedisHelperService($this->grabClient());
+    }
+
+    public function grabTimeStampManager()
+    {
+        return new TimeStampManager($this->grabRedisHelperService(), 1);
+    }
+
+    public function grabKeyServiceResolver()
+    {
+        $keyServiceLocator = new ServiceLocator([
+
+        ]);
+        return new KeyServiceResolver($keyServiceLocator);
+    }
+
+    public function grabTimeStampServiceResolver()
+    {
+        $timeStampServiceLocator = new ServiceLocator([
+
+        ]);
+        return new TimeStampServiceResolver($timeStampServiceLocator);
     }
 }
